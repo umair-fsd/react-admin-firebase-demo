@@ -1,6 +1,8 @@
 import * as React from "react";
 import { PostList, PostShow, PostCreate, PostEdit } from "./posts";
 import { VideoShow, VideoEdit, VideoList, UploadVideo } from "./videos";
+import { QuestionShow, QuestionList, QuestionCreate } from "./questions";
+import { UserList, UserShow, UserCreate, UserEdit } from './users';
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import {
   CommentList,
@@ -15,6 +17,7 @@ import {
 } from "react-admin-firebase";
 import CommentIcon from "@material-ui/icons/Comment";
 import CustomLoginPage from "./CustomLoginPage";
+import UserIcon from '@material-ui/icons/People';
 
 import { firebaseConfig as config } from "./FIREBASE_CONFIG";
 
@@ -49,6 +52,22 @@ class App extends React.Component {
           create={UploadVideo}
           edit={VideoEdit}
         />
+        <Resource
+          name="questions"
+          icon={CommentIcon}
+          list={QuestionList}
+          show={QuestionShow}
+          create={QuestionCreate}
+          // edit={VideoEdit}
+        />
+         <Resource
+            name="users"
+            icon={UserIcon}
+            list={UserList}
+            show={UserShow}
+            create={UserCreate}
+            edit={UserEdit}
+          />
       </Admin>
     );
   }
