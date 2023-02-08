@@ -60,7 +60,7 @@ export const VideoList = (props) => {
     });
     var config = {
       method: "post",
-      url: "https://video-streaming-server.onrender.com/deleteVideo",
+      url: "https://dsskonsult.se/deleteVideo",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
@@ -80,7 +80,8 @@ export const VideoList = (props) => {
       <Datagrid rowClick={(id) => alert(id)}>
         <RichTextField source="filename" />
         <TextField source="language" />
-
+        <TextField source="title" />
+        <EditButton label="" />
         <CustomDeleteButton undoable={false} type="Video" field="filename" />
       </Datagrid>
     </List>
@@ -99,6 +100,7 @@ export const VideoShow = (props) => (
 export const UploadVideo = (props) => {
   const [lang, setLang] = React.useState("en");
   const [selectedFile, setSelectedFile] = React.useState(null);
+  const [title, setTitle] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const onFileChange = (event) => {
     // Update the state
@@ -117,6 +119,7 @@ export const UploadVideo = (props) => {
     // Update the formData object
     formData.append("file", selectedFile, selectedFile.name);
     formData.append("lang", lang);
+    formData.append("title", title);
     // Details of the uploaded file
     console.log(formData);
 
@@ -124,7 +127,7 @@ export const UploadVideo = (props) => {
     // Send formData object
     setLoading(true);
     axios
-      .post("https://video-streaming-server.onrender.com/uploadVideo", formData)
+      .post("https://dsskonsult.se/uploadVideo", formData)
       .then((res) => {
         setLoading(false);
         alert("File uploaded successfully");
@@ -162,14 +165,21 @@ export const UploadVideo = (props) => {
   };
   return (
     <div>
-      <h1>Visma Dashboard Videos</h1>
-      <h3>File Upload using React!</h3>
+      <h1>DSS Konsult Videos</h1>
+      {/* <h3>File Upload using React!</h3> */}
       <select id="cars" name="cars" onChange={(e) => setLang(e.target.value)}>
-        <option value="en">English</option>
-        <option value="ar">العربية</option>
-        <option value="fr">Français</option>
-        <option value="de">Deutsch</option>
+        <option value="en">Engelska</option>
+        <option value="ar">Arabiska</option>
+        <option value="ku">Kurdiska</option>
+        <option value="sv">Svenska</option>
       </select>
+      <br />
+      <br />
+      <input
+        placeholder="Title"
+        type={"text"}
+        onChange={(e) => setTitle(e.target.value)}
+      />
 
       <div style={{ marginTop: 20 }}>
         <input type="file" onChange={onFileChange} />
@@ -209,25 +219,17 @@ export const UploadVideo = (props) => {
 export const VideoEdit = (props) => (
   <Edit {...props}>
     <SimpleForm>
-      {/* <ReferenceInput source="id" options={{ disabled: true }} />
-      <ReferenceInput source="createdate" options={{ disabled: true }} />
-      <ReferenceInput source="lastupdate" options={{ disabled: true }} /> */}
-      {/* <ReferenceInput label="Comment" source="title" reference="comments">
-        <SelectInput optionText="title" />
-      </ReferenceInput> */}
       <TextInput source="title" />
-      <RichTextInput source="body" />
-      {/* <SelectInput
-        source="rating"
+
+      <SelectInput
+        source="language"
         choices={[
-          { id: 1, name: "Good" },
-          { id: 2, name: "Okay" },
-          { id: 3, name: "Bad" },
+          { id: "english", name: "Engelska" },
+          { id: "arabic", name: "Arabiska" },
+          { id: "kurdiska", name: "Kurdiska" },
+          { id: "svenska", name: "Svenska" },
         ]}
-      /> */}
-      <FileInput source="file" label="File" accept="application/pdf">
-        <FileField source="src" title="title" />
-      </FileInput>
+      />
     </SimpleForm>
   </Edit>
 );

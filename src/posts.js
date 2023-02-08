@@ -99,10 +99,10 @@ export const PostCreate = (props) => (
       <SelectInput
         source="language"
         choices={[
-          { id: "english", name: "English" },
-          { id: "arabic", name: "العربية" },
-          { id: "francais", name: "Français" },
-          { id: "deutsch", name: "Deutsch" },
+          { id: "english", name: "Engelska" },
+          { id: "arabic", name: "Arabiska" },
+          { id: "kurdiska", name: "Kurdiska" },
+          { id: "svenska", name: "Svenska" },
         ]}
       />
       {/* <ReferenceInput label="Comment" source="title" reference="comments">

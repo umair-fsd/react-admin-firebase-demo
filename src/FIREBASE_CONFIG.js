@@ -1,3 +1,4 @@
+import firebase from "firebase/compat";
 export const firebaseConfig = {
   apiKey: "AIzaSyCJjA7JH6HsqEKTQjSxaMluzvMWqEk5Vo0",
   authDomain: "visma-admin.firebaseapp.com",
@@ -7,3 +8,7 @@ export const firebaseConfig = {
   appId: "1:281395664465:web:7fcbfe8f937fcf317f8a70",
   measurementId: "G-39PBJDF94F",
 };
+firebase.initializeApp(firebaseConfig);
+firebase.analytics();
+export const auth = firebase.auth();
+export const db = firebase.firestore();

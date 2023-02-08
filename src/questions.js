@@ -2,6 +2,7 @@
 import * as React from "react";
 import axios from "axios";
 // tslint:disable-next-line:no-var-requires
+import ImageZoom from "react-medium-image-zoom";
 import {
   Datagrid,
   List,
@@ -24,6 +25,7 @@ import {
   FileInput,
   RadioButtonGroupInput,
   BooleanField,
+  ImageField,
 } from "react-admin";
 import RichTextInput from "ra-input-rich-text";
 
@@ -45,26 +47,66 @@ export const QuestionList = (props) => (
     </Datagrid>
   </List>
 );
+const ZoomImageField = ({ source, record, ...rest }) => {
+  const imageUrl = record[source];
 
-export const QuestionShow = (props) => (
-  <Show {...props}>
-    <SimpleShowLayout>
-      <TextField source="Name" />
-      <TextField label={"Question 1"} source="question1.question" />
-      <BooleanField label={"Answer"} source="question1.answer" />
-      <TextField label={"Question 2"} source="question2.question" />
-      <BooleanField label={"Answer"} source="question2.answer" />
-      <TextField label={"Question 3"} source="question3.question" />
-      <BooleanField label={"Answer"} source="question3.answer" />
-      <TextField label={"Question 4"} source="question4.question" />
-      <BooleanField label={"Answer"} source="question4.answer" />
-      <TextField label={"Question 5"} source="question5.question" />
-      <BooleanField label={"Answer"} source="question5.answer" />
-      <TextField source="createdate" />
-      <TextField source="lastupdate" />
-    </SimpleShowLayout>
-  </Show>
-);
+  return (
+    <ImageZoom
+      image={{
+        src: imageUrl,
+        className: "img",
+        style: { width: 200 },
+      }}
+      zoomImage={{
+        src: imageUrl,
+        className: "img-zoomed",
+      }}
+    />
+  );
+};
+
+const BooleanDisplay = ({ record, source }) => {
+  console.log('RECORD', record)
+  const src1 = source.split('.')[0]
+  const src2 = source.split('.')[1]
+  const src = record[src1][src2]
+
+  return  (
+    <p>{src ? 'Ja':'Nej'}</p>
+    // <TextField label={'Test'}/>
+  )
+}
+export const QuestionShow = (props) => {
+  console.log("PROPS", props);
+  return (
+    <Show {...props}>
+      <SimpleShowLayout>
+        <TextField source="Name" />
+        <TextField
+          label={
+            "Är någon av de av er uppgivna verkliga huvudmännen eller bolagets styrelseledamöter i politiks utsatt position?"
+          }
+        />
+        {/* <BooleanField   source="question1.answer"   /> */}
+        
+        <BooleanDisplay source="question1.answer"  record={props.record} />
+        <TextField
+          label={"Har bolaget skulder till kronofogden?"}
+          // source="question2.question"
+        />
+        {/* <BooleanField label={"Answer"} source="question2.answer" /> */}
+        <BooleanDisplay source="question2.answer"  record={props.record} />
+        <TextField label={"Har bolaget kontanta försäljningar"} />
+        {/* <BooleanField label={"Answer"} source="question3.answer" /> */}
+        <BooleanDisplay source="question3.answer"  record={props.record} />
+   
+        <ZoomImageField source="driving_license" />
+        <TextField source="createdate" />
+        <TextField source="lastupdate" />
+      </SimpleShowLayout>
+    </Show>
+  );
+};
 
 export const QuestionCreate = (props) => (
   <Create {...props}>
